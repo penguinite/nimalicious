@@ -1,0 +1,5 @@
+!.gitignore
+!*.nimble
+!*.nim
+!*.md
+!LICENSE
