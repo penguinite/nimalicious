@@ -2,7 +2,7 @@
 
 version       = "0.1.0"
 author        = "systemonia"
-description   = "Malware written in nim, specifically for nim-lang/virus_scanner"
+description   = "Open-source malware written in Nim for better Antivirus heuristics."
 license       = "MIT"
 srcDir        = "src"
 bin           = @["gen_ransom"]
