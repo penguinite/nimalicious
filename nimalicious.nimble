@@ -1,7 +1,7 @@
 # Package
 
 version       = "0.1.0"
-author        = "systemonia"
+author        = "penguinite"
 description   = "Open-source malware written in Nim for better Antivirus heuristics."
 license       = "MIT"
 srcDir        = "src"
