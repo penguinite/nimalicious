@@ -1,5 +1,2 @@
-!.gitignore
-!*.nimble
-!*.nim
-!*.md
-!LICENSE
+gen_ransom
+build
