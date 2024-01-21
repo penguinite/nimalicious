@@ -25,8 +25,8 @@ proc autoPad*(input: string, segmentSize: int = 256): seq[string] =
   # Re-size first/last segment if its too small
   if result[high(result)].len() < segmentSize:
     let diff = segmentSize - result[high(result)].len()
-    for i in 0..diff:
-      result[high(result)].add('\0')
+    for i in 0..diff - 1:
+      result[high(result)].add(' ')
   return result
 
 proc autoPadStr*(input: string, segmentSize: int = 256): string =
