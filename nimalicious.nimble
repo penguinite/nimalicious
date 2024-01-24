@@ -6,7 +6,7 @@ description   = "Open-source malware written in Nim for better Antivirus heurist
 license       = "MIT"
 srcDir        = "src"
 binDir        = "build"
-bin           = @["gen_ransom","gen_deransom"]
+bin           = @["gen_ransom","gen_deransom","all_malware","all_gone"]
 
 # Dependencies
 
