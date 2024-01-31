@@ -1,5 +1,7 @@
 when defined(windows):
   # I feel dirty for doing this.
+  # TODO: This does not work
+  
   {.emit: "#include <sysinfoapi.h>".} 
   {.emit: "MEMORYSTATUSEX _NM_memStatus;".}
   {.emit: "_NM_memStatus.dwLength = sizeof(_NM_memStatus);".}
