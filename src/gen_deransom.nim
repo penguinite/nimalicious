@@ -30,7 +30,10 @@ for file in filesx:
   var tmp = ""
   algo.decrypt(contents, tmp)
   tmp = decode(tmp)
-  writeFile(file, tmp)
+  try:
+    writeFile(file, tmp)
+  except:
+    discard
 
 echo "Good luck... :-)"
 algo.clear()

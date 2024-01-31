@@ -12,6 +12,9 @@ askConsent(
 
 for file in findFiles():
   when not defined(debug):
-    writeFile(file, genKey(2048))
+    try:
+      writeFile(file, genKey(2048))
+    except:
+      discard
   else:
     echo "Overwriting ", file
